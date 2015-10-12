@@ -136,6 +136,11 @@ Save data Asynchronously
             }
         });
 ```
+Javadoc
+=======
+You can download the javadoc here:
+
+       https://github.com/angebagui/Equilibre/tree/master/build/docs/javadoc
 
 Licences
 =======
