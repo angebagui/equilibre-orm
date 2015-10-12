@@ -57,7 +57,7 @@ Here we have created a pojo named Dummy which extends to EquilibleObject. Like t
 @EquilibreClassName("Dummy")
 public class Dummy extends EquilibreObject { // The EquilibreObject have already an integer property named id has primary key
 
-    @DatabaseField
+    @DatabaseField //Equilibre rely on OrmLite to don't rebuild the wheel. Use Ormlite annotation to specify your column
     public String name;
 
 
