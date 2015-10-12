@@ -13,7 +13,7 @@ Equilibre is inspired from Parse SDK and reactive programming.
 Download
 ========
 
-Add to your gradle before dependencies:
+Add to your Gradle (build.gradle) before dependencies:
 ```groovy
 repositories {
     maven {
