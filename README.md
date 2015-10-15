@@ -25,7 +25,7 @@ In your dependences
 ```groovy
 dependencies {
 ...
-compile 'com.equilibre:equilibre:0.1.0-beta2'
+compile 'com.equilibre:equilibre:0.1.1-beta1'
 }
 ```
 
