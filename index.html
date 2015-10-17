@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Equilibre by angebagui</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Equilibre</h1>
+      <h2 class="project-tagline">Reactive database connection for Android based on ORMLite.</h2>
+      <a href="https://github.com/angebagui/Equilibre" class="btn">View on GitHub</a>
+      <a href="https://github.com/angebagui/Equilibre/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/angebagui/Equilibre/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <p>Connect to your database reactively with Equilibre in Android. Write my same code with my Ormlite every time is not possible, so i decided to develop that library. And just create my different POJO classes that extends to one class with reactive methods. I have meet Parse Android SDK and Retrofit after, so i have imagined a combination of HTTP client, ORM and Reactive Programming in one library.</p>
+
+<h3>
+<a id="before" class="anchor" href="#before" aria-hidden="true"><span class="octicon octicon-link"></span></a>Before</h3>
+
+<p>You have to know this project is beta version. This version is a game version. Type-safe HTTP client for Android will be included in the release version. Equilibre is inspired from Parse SDK and reactive programming.</p>
+
+<h3>
+<a id="download" class="anchor" href="#download" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download</h3>
+
+<p>The source code of Equilibre is <a href="https://github.com/angebagui/Equilibre">available on Github</a></p>
+
+<p>Add to your Gradle (build.gradle) before dependencies:</p>
+
+<div class="highlight highlight-source-groovy"><pre>repositories {
+    maven {
+        url <span class="pl-s"><span class="pl-pds">'</span>https://dl.bintray.com/angebagui/maven<span class="pl-pds">'</span></span>
+    }
+}</pre></div>
+
+<p>In your dependences</p>
+
+<div class="highlight highlight-source-groovy"><pre>dependencies {
+<span class="pl-k">..</span>.
+compile <span class="pl-s"><span class="pl-pds">'</span>com.equilibre:equilibre:0.1.1-beta1<span class="pl-pds">'</span></span>
+}</pre></div>
+
+<h1>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h1>
+
+<p>Equilibre required that you created a subclass that extends to Application and your override the onCreate method like this:</p>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">MyApp</span> <span class="pl-k">extends</span> <span class="pl-e">Application</span> {
+    <span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-smi">String</span> <span class="pl-c1">DATABASE_NAME</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>dummyexampledb.db<span class="pl-pds">"</span></span>;
+    <span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-k">int</span> <span class="pl-c1">DATABASE_VERSION</span> <span class="pl-k">=</span> <span class="pl-c1">1</span>;
+    <span class="pl-k">@Override</span>
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">onCreate</span>() {
+        <span class="pl-v">super</span><span class="pl-k">.</span>onCreate();
+
+        <span class="pl-c">//Equilibe need to be initialzed</span>
+        <span class="pl-smi">Equilibre</span><span class="pl-k">.</span>initialize(getApplicationContext(), <span class="pl-c1">DATABASE_NAME</span>, <span class="pl-c1">DATABASE_VERSION</span>);
+        <span class="pl-c">//Register our differentes models</span>
+        <span class="pl-smi">EquilibreObject</span><span class="pl-k">.</span>registerSubclass(<span class="pl-smi">Dummy</span><span class="pl-k">.</span>class);
+
+        <span class="pl-c">// DON'T FORGET TO ADD MyApp in The MANIFEST OF YOUR PROJECT</span>
+    }
+}</pre></div>
+
+<p>Here we have created a pojo named Dummy which extends to EquilibleObject. Like this</p>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-c">//Required the use that annotation with the name the table</span>
+@EquilibreClassName(<span class="pl-s"><span class="pl-pds">"</span>Dummy<span class="pl-pds">"</span></span>)
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Dummy</span> <span class="pl-k">extends</span> <span class="pl-e">EquilibreObject</span> { <span class="pl-c">// The EquilibreObject have already an integer property named id has primary key</span>
+
+    <span class="pl-k">@DatabaseField</span> <span class="pl-c">//Equilibre rely on OrmLite to don't rebuild the wheel. Use Ormlite annotation to specify your column</span>
+    <span class="pl-k">public</span> <span class="pl-smi">String</span> name;
+
+
+    <span class="pl-c">/**</span>
+<span class="pl-c">     * It's required to create this default constructor</span>
+<span class="pl-c">     */</span>
+    <span class="pl-k">public</span> <span class="pl-en">Dummy</span>(){
+
+    }
+
+    <span class="pl-c">/**</span>
+<span class="pl-c">     * It's required to write this method to build beautiful query with Equilibre</span>
+<span class="pl-c">     * @return</span>
+<span class="pl-c">     */</span>
+    <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">EquilibreQuery&lt;<span class="pl-smi">Dummy</span>&gt;</span> <span class="pl-en">getQuery</span>(){
+        <span class="pl-k">return</span> <span class="pl-smi">EquilibreQuery</span><span class="pl-k">.</span>getQuery(<span class="pl-smi">Dummy</span><span class="pl-k">.</span>class);
+    }
+}</pre></div>
+
+<p>Now everywhere in your code you came persiste data like this:</p>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">MainActivity</span> <span class="pl-k">extends</span> <span class="pl-e">AppCompatActivity</span> {
+
+    <span class="pl-k">@Override</span>
+    <span class="pl-k">protected</span> <span class="pl-k">void</span> <span class="pl-en">onCreate</span>(<span class="pl-smi">Bundle</span> <span class="pl-v">savedInstanceState</span>) {
+        <span class="pl-v">super</span><span class="pl-k">.</span>onCreate(savedInstanceState);
+        setContentView(<span class="pl-smi">R</span><span class="pl-k">.</span>layout<span class="pl-k">.</span>activity_main);
+
+        <span class="pl-c">//Get our EquilibreQuery for request</span>
+        <span class="pl-k">EquilibreQuery&lt;<span class="pl-smi">Dummy</span>&gt;</span> query <span class="pl-k">=</span> <span class="pl-smi">Dummy</span><span class="pl-k">.</span>getQuery();
+        <span class="pl-c">//make a request</span>
+        query<span class="pl-k">.</span>findInBackground(<span class="pl-k">new</span> <span class="pl-k">FindCallback&lt;<span class="pl-smi">Dummy</span>&gt;</span>(){
+            <span class="pl-k">@Override</span>
+            <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">done</span>(<span class="pl-k">List&lt;<span class="pl-smi">Dummy</span>&gt;</span> <span class="pl-v">dummies</span>, <span class="pl-smi">EquilibreException</span> <span class="pl-v">e</span>) {
+                <span class="pl-k">if</span> (e<span class="pl-k">==</span><span class="pl-c1">null</span>){ <span class="pl-c">//it's good</span>
+                    <span class="pl-smi">Log</span><span class="pl-k">.</span>d(<span class="pl-s"><span class="pl-pds">"</span>Ange BAGUI<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>DEBUG ===&gt; Dummies available: <span class="pl-pds">"</span></span><span class="pl-k">+</span>dummies<span class="pl-k">+</span><span class="pl-s"><span class="pl-pds">"</span> size: <span class="pl-pds">"</span></span><span class="pl-k">+</span>dummies<span class="pl-k">.</span>size()<span class="pl-k">+</span><span class="pl-s"><span class="pl-pds">"</span> &lt;&lt;&lt;==== <span class="pl-pds">"</span></span><span class="pl-k">+</span> <span class="pl-k">new</span> <span class="pl-smi">Date</span>());
+                }<span class="pl-k">else</span>{
+                    <span class="pl-c">// nothing to do</span>
+                    <span class="pl-smi">Log</span><span class="pl-k">.</span>e(<span class="pl-s"><span class="pl-pds">"</span>Ange BAGUI<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>ERROR ===&gt; <span class="pl-pds">"</span></span><span class="pl-k">+</span>e<span class="pl-k">+</span><span class="pl-s"><span class="pl-pds">"</span> &lt;&lt;&lt;==== <span class="pl-pds">"</span></span><span class="pl-k">+</span> <span class="pl-k">new</span> <span class="pl-smi">Date</span>());
+                }
+            }
+        });
+    }
+</pre></div>
+
+<h3>
+<a id="save-data-asynchronously" class="anchor" href="#save-data-asynchronously" aria-hidden="true"><span class="octicon octicon-link"></span></a>Save data Asynchronously</h3>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-c">//we don't have data so we create</span>
+        <span class="pl-smi">Dummy</span> dummy1 <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Dummy</span>(<span class="pl-s"><span class="pl-pds">"</span>Ange<span class="pl-pds">"</span></span>);
+        <span class="pl-smi">Dummy</span> dummy2 <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Dummy</span>(<span class="pl-s"><span class="pl-pds">"</span>Bagui<span class="pl-pds">"</span></span>);
+        <span class="pl-smi">Dummy</span> dummy3 <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Dummy</span>(<span class="pl-s"><span class="pl-pds">"</span>Cyrille<span class="pl-pds">"</span></span>);
+        <span class="pl-smi">Dummy</span> dummy4 <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Dummy</span>(<span class="pl-s"><span class="pl-pds">"</span>Gupie<span class="pl-pds">"</span></span>);
+
+        <span class="pl-c">//Create a list</span>
+        <span class="pl-k">List&lt;<span class="pl-smi">Dummy</span>&gt;</span> dummies <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">ArrayList&lt;&gt;</span>();
+
+        <span class="pl-c">//Add these to the list</span>
+        dummies<span class="pl-k">.</span>add(dummy1);
+        dummies<span class="pl-k">.</span>add(dummy2);
+        dummies<span class="pl-k">.</span>add(dummy3);
+        dummies<span class="pl-k">.</span>add(dummy4);
+
+        <span class="pl-smi">Log</span><span class="pl-k">.</span>d(<span class="pl-s"><span class="pl-pds">"</span>Ange BAGUI<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>DEBUG ===&gt; Dummies created <span class="pl-pds">"</span></span> <span class="pl-k">+</span> dummies <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span> &lt;&lt;&lt;==== <span class="pl-pds">"</span></span> <span class="pl-k">+</span> <span class="pl-k">new</span> <span class="pl-smi">Date</span>());
+
+        <span class="pl-smi">Dummy</span><span class="pl-k">.</span>saveAllInBackground(dummies, <span class="pl-k">new</span> <span class="pl-smi">SaveCallback</span>(){
+            <span class="pl-k">@Override</span>
+            <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">done</span>(<span class="pl-smi">EquilibreException</span> <span class="pl-v">e</span>) {
+                <span class="pl-k">if</span>(e<span class="pl-k">==</span><span class="pl-c1">null</span>){
+                    <span class="pl-smi">Log</span><span class="pl-k">.</span>d(<span class="pl-s"><span class="pl-pds">"</span>Ange BAGUI<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>DEBUG ===&gt; Dummies saved successfully &lt;&lt;&lt;==== <span class="pl-pds">"</span></span> <span class="pl-k">+</span> <span class="pl-k">new</span> <span class="pl-smi">Date</span>());
+                }<span class="pl-k">else</span>{
+                   <span class="pl-c">//something is wrong</span>
+                    <span class="pl-smi">Log</span><span class="pl-k">.</span>e(<span class="pl-s"><span class="pl-pds">"</span>Ange BAGUI<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>ERROR ===&gt; <span class="pl-pds">"</span></span><span class="pl-k">+</span>e<span class="pl-k">+</span><span class="pl-s"><span class="pl-pds">"</span> &lt;&lt;&lt;==== <span class="pl-pds">"</span></span> <span class="pl-k">+</span> <span class="pl-k">new</span> <span class="pl-smi">Date</span>());
+                }
+            }
+        });</pre></div>
+
+<h3>
+<a id="licences" class="anchor" href="#licences" aria-hidden="true"><span class="octicon octicon-link"></span></a>Licences</h3>
+
+<h1></h1>
+
+<pre><code>Copyright 2015 Ange Bagui.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</code></pre>
+
+<h3>
+<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributing</h3>
+
+<p>If you would like to contribute code you can do so through GitHub by forking the repository and sending a pull request.</p>
+
+<h3>
+<a id="contact" class="anchor" href="#contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contact</h3>
+
+<p>Twitter : <a href="https://twitter.com/angebagui">@angebagui</a><br>
+Google+ : <a href="https://plus.google.com/u/0/+AngeBagui">+AngeBagui</a><br>
+Email   : <a href="mailto:angebagui@gmail.com">angebagui@gmail.com</a></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/angebagui/Equilibre">Equilibre</a> is maintained by <a href="https://github.com/angebagui">angebagui</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
