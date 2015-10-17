@@ -3,6 +3,7 @@ package com.equilibre;
 import android.util.Log;
 
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
 
@@ -16,7 +17,7 @@ import bolts.Task;
 /**
  * <p>
  * The {@code EquilibreQuery} class defines a query that is used to fetch {@link EquilibreObject}s. The most
- * common use case is finding all objects that match a query through the {@link #findInBackground(FindCallback)}}
+ * common use case is finding all objects that match a query through the {@link #findInBackground(EquilibreCallback2)}}
  * method, using a {@link FindCallback}. For example, this sample code fetches all objects of class
  * {@code "MyClass"}. It calls a different function depending on whether the fetch succeeded or not.
  * </p>
@@ -360,8 +361,13 @@ public class EquilibreQuery<T extends EquilibreObject> {
      * @param callback this callback run on the mainthread
      *
      */
-    public void findInBackground(FindCallback callback){
-        EquilibreTaskUtils.callbackOnMainThreadAsync(findInBackground(), callback);
+    public void findInBackground(EquilibreCallback2 callback){
+        if (callback instanceof FindCallback){
+            EquilibreTaskUtils.callbackOnMainThreadAsync(findInBackground(), callback);
+        }else {
+            EquilibreTaskUtils.callbackOnMainThreadAsync(findOneInBackground(), callback);
+        }
+
     }
 
     /**
@@ -382,6 +388,20 @@ public class EquilibreQuery<T extends EquilibreObject> {
                     return getDao().queryForAll();
                 }
 
+            }
+        });
+    }
+    private Task<T> findOneInBackground(){
+        checkIfRunning(true);
+        return Task.callInBackground(new Callable<T>() {
+            @Override
+            public T call() throws Exception {
+
+                if (isWhereClauses) {
+                    return getQueryBuilder().queryForFirst();
+                } else {
+                    throw new RuntimeException("None clause used");
+                }
             }
         });
     }
@@ -445,6 +465,7 @@ public class EquilibreQuery<T extends EquilibreObject> {
             }
         });
     }
+
 
     /**
      *

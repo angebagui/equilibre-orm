@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/angebagui/Equilibre'
     gitUrl = 'https://github.com/angebagui/Equilibre.git'
 
-    libraryVersion = '0.1.0-beta2'
+    libraryVersion = '0.1.1-beta1'
 
     developerId = 'angebagui'
     developerName = 'Ange Bagui'

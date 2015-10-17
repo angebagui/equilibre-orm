@@ -1,8 +1,8 @@
 -classpath '/Users/macbookpro/Library/Android/sdk/platforms/android-23/android.jar'
 -d '/Users/macbookpro/AndroidStudioProjects/Equilibre/EquilibreProject/equilibre/build/docs/javadoc'
--doctitle 'equilibre 0.1.0-beta2 API'
+-doctitle 'equilibre 0.1.1-beta1 API'
 -quiet 
--windowtitle 'equilibre 0.1.0-beta2 API'
+-windowtitle 'equilibre 0.1.1-beta1 API'
 '/Users/macbookpro/AndroidStudioProjects/Equilibre/EquilibreProject/equilibre/src/main/java/com/equilibre/ConnectivityNotifier.java'
 '/Users/macbookpro/AndroidStudioProjects/Equilibre/EquilibreProject/equilibre/src/main/java/com/equilibre/CountCallback.java'
 '/Users/macbookpro/AndroidStudioProjects/Equilibre/EquilibreProject/equilibre/src/main/java/com/equilibre/DeleteCallback.java'

@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.equilibre</groupId>
   <artifactId>equilibre</artifactId>
-  <version>0.1.0-beta2</version>
+  <version>0.1.1-beta1</version>
   <packaging>aar</packaging>
   <name>equilibre</name>
   <description>A toolkit for android project that combine Object-relational mapping and Reactive programming.</description>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/Users/macbookpro/AndroidStudioProjects/Equilibre/EquilibreProject/Equilibre/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/Users/macbookpro/AndroidStudioProjects/Equilibre/EquilibreProject/equilibre/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <attr format="reference" name="drawerArrowStyle"/>
     <attr format="dimension" name="height"/>
@@ -202,10 +202,10 @@
     <string name="abc_shareactionprovider_share_with">Share with</string>
     <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
-    <!-- From: file:/Users/macbookpro/AndroidStudioProjects/Equilibre/EquilibreProject/Equilibre/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/macbookpro/AndroidStudioProjects/Equilibre/EquilibreProject/equilibre/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="app_name">Equilibre</string>
-    <!-- From: file:/Users/macbookpro/AndroidStudioProjects/Equilibre/EquilibreProject/Equilibre/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/Users/macbookpro/AndroidStudioProjects/Equilibre/EquilibreProject/equilibre/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <string name="status_bar_notification_info_overflow">999+</string>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
