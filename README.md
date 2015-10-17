@@ -1,7 +1,7 @@
 Equilibre
 =========
 
-Connect to your database reactively with Equilibre in Android. Write my same code with my Ormlite every thime is not possible, so i decided to develop that library. And just create my differents pojo classes that extends to one class with reactive method. I have meet Parse Android SDK and Retrofit after, so i imagine a combination of HTTP client, ORM and Reactive Programming for one library. 
+Connect to your database reactively with Equilibre in Android. Write my same code with my Ormlite every time is not possible, so i decided to develop that library. And just create my differents POJO classes that extends to one class with reactive methods. I have meet Parse Android SDK and Retrofit after, so i have imagined a combination of HTTP client, ORM and Reactive Programming in one library. 
 
 
 Before
