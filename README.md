@@ -16,8 +16,7 @@ Download
 In your dependences
 ```groovy
 dependencies {
-...
-compile 'io.github.angebagui.equilibre:equilibre-orm:1.0.1'
+  compile 'io.github.angebagui.equilibre:equilibre-orm:1.0.1'
 }
 ```
 
