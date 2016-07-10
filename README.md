@@ -13,19 +13,11 @@ Equilibre is inspired from Parse SDK and reactive programming.
 Download
 ========
 
-Add to your Gradle (build.gradle) before dependencies:
-```groovy
-repositories {
-    maven {
-        url 'https://dl.bintray.com/angebagui/maven'
-    }
-}
-```
 In your dependences
 ```groovy
 dependencies {
 ...
-compile 'com.equilibre:equilibre:0.1.1-beta1'
+compile 'io.github.angebagui.equilibre:equilibre-orm:1.0.1'
 }
 ```
 
@@ -37,7 +29,7 @@ You can download the javadoc here:
 
 Licences
 =======
-    Copyright 2015 Ange Bagui.
+    Copyright 2016 Ange Bagui.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
