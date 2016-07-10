@@ -24,7 +24,7 @@ Javadoc
 =======
 You can download the javadoc here:
 
-       https://github.com/angebagui/Equilibre/blob/master/javadoc
+      http://angebagui.github.io/equilibre-orm/javadoc/
 
 Licences
 =======
