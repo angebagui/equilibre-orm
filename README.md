@@ -22,7 +22,7 @@ dependencies {
 
 Javadoc
 =======
-You can download the javadoc here:
+You can have the javadoc here:
 
       http://angebagui.github.io/equilibre-orm/javadoc/
 
