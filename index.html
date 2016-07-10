@@ -13,41 +13,40 @@
     <section class="page-header">
       <h1 class="project-name">Equilibre</h1>
       <h2 class="project-tagline">Reactive database connection for Android based on ORMLite.</h2>
-      <a href="https://github.com/angebagui/Equilibre" class="btn">View on GitHub</a>
-      <a href="https://github.com/angebagui/Equilibre/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/angebagui/Equilibre/tarball/master" class="btn">Download .tar.gz</a>
+      <a href="https://github.com/angebagui/equilibre" class="btn">View on GitHub</a>
+      <a href="https://github.com/angebagui/equilibre/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/angebagui/equilibre/tarball/master" class="btn">Download .tar.gz</a>
     </section>
 
     <section class="main-content">
       <p>Connect to your database reactively with Equilibre in Android. Write my same code with my Ormlite every time is not possible, so i decided to develop that library. And just create my different POJO classes that extends to one class with reactive methods. I have meet Parse Android SDK and Retrofit after, so i have imagined a combination of HTTP client, ORM and Reactive Programming in one library.</p>
 
 <h3>
-<a id="before" class="anchor" href="#before" aria-hidden="true"><span class="octicon octicon-link"></span></a>Before</h3>
+<a id="before" class="anchor" href="#before" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Before</h3>
 
 <p>You have to know this project is beta version. This version is a game version. Type-safe HTTP client for Android will be included in the release version. Equilibre is inspired from Parse SDK and reactive programming.</p>
 
 <h3>
-<a id="download" class="anchor" href="#download" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download</h3>
+<a id="download" class="anchor" href="#download" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Download</h3>
 
-<p>The source code of Equilibre is <a href="https://github.com/angebagui/Equilibre">available on Github</a></p>
-
-<p>Add to your Gradle (build.gradle) before dependencies:</p>
-
-<div class="highlight highlight-source-groovy"><pre>repositories {
-    maven {
-        url <span class="pl-s"><span class="pl-pds">'</span>https://dl.bintray.com/angebagui/maven<span class="pl-pds">'</span></span>
-    }
-}</pre></div>
+<p>The source code of Equilibre is <a href="https://github.com/angebagui/equilibre">available on Github</a></p>
 
 <p>In your dependences</p>
 
 <div class="highlight highlight-source-groovy"><pre>dependencies {
-<span class="pl-k">..</span>.
-compile <span class="pl-s"><span class="pl-pds">'</span>com.equilibre:equilibre:0.1.1-beta1<span class="pl-pds">'</span></span>
+  compile <span class="pl-s"><span class="pl-pds">'</span>io.github.angebagui.equilibre:equilibre-orm:1.0.1<span class="pl-pds">'</span></span>
 }</pre></div>
 
 <h1>
-<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h1>
+<a id="javadoc" class="anchor" href="#javadoc" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Javadoc</h1>
+
+<p>You can download the javadoc here:</p>
+
+<pre><code>   https://github.com/angebagui/equilibre/blob/master/javadoc
+</code></pre>
+
+<h1>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h1>
 
 <p>Equilibre required that you created a subclass that extends to Application and your override the onCreate method like this:</p>
 
@@ -71,10 +70,14 @@ compile <span class="pl-s"><span class="pl-pds">'</span>com.equilibre:equilibre:
 
 <div class="highlight highlight-source-java"><pre><span class="pl-c">//Required the use that annotation with the name the table</span>
 @EquilibreClassName(<span class="pl-s"><span class="pl-pds">"</span>Dummy<span class="pl-pds">"</span></span>)
-<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Dummy</span> <span class="pl-k">extends</span> <span class="pl-e">EquilibreObject</span> { <span class="pl-c">// The EquilibreObject have already an integer property named id has primary key</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Dummy</span> <span class="pl-k">extends</span> <span class="pl-e">EquilibreObject&lt;<span class="pl-smi">Integer</span>&gt;</span> { 
 
+
+    <span class="pl-k">@DatabaseField</span>(<span class="pl-c1">id</span> <span class="pl-k">=</span> <span class="pl-c1">true</span>, <span class="pl-c1">generatedId</span> <span class="pl-k">=</span> <span class="pl-c1">true</span>)
+    <span class="pl-k">public</span> <span class="pl-smi">Integer</span> id;
     <span class="pl-k">@DatabaseField</span> <span class="pl-c">//Equilibre rely on OrmLite to don't rebuild the wheel. Use Ormlite annotation to specify your column</span>
     <span class="pl-k">public</span> <span class="pl-smi">String</span> name;
+
 
 
     <span class="pl-c">/**</span>
@@ -88,7 +91,7 @@ compile <span class="pl-s"><span class="pl-pds">'</span>com.equilibre:equilibre:
 <span class="pl-c">     * It's required to write this method to build beautiful query with Equilibre</span>
 <span class="pl-c">     * @return</span>
 <span class="pl-c">     */</span>
-    <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">EquilibreQuery&lt;<span class="pl-smi">Dummy</span>&gt;</span> <span class="pl-en">getQuery</span>(){
+    <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">EquilibreQuery&lt;<span class="pl-smi">Dummy</span>, <span class="pl-smi">Integer</span>&gt;</span> <span class="pl-en">getQuery</span>(){
         <span class="pl-k">return</span> <span class="pl-smi">EquilibreQuery</span><span class="pl-k">.</span>getQuery(<span class="pl-smi">Dummy</span><span class="pl-k">.</span>class);
     }
 }</pre></div>
@@ -120,7 +123,7 @@ compile <span class="pl-s"><span class="pl-pds">'</span>com.equilibre:equilibre:
 </pre></div>
 
 <h3>
-<a id="save-data-asynchronously" class="anchor" href="#save-data-asynchronously" aria-hidden="true"><span class="octicon octicon-link"></span></a>Save data Asynchronously</h3>
+<a id="save-data-asynchronously" class="anchor" href="#save-data-asynchronously" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Save data Asynchronously</h3>
 
 <div class="highlight highlight-source-java"><pre><span class="pl-c">//we don't have data so we create</span>
         <span class="pl-smi">Dummy</span> dummy1 <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Dummy</span>(<span class="pl-s"><span class="pl-pds">"</span>Ange<span class="pl-pds">"</span></span>);
@@ -152,7 +155,7 @@ compile <span class="pl-s"><span class="pl-pds">'</span>com.equilibre:equilibre:
         });</pre></div>
 
 <h3>
-<a id="licences" class="anchor" href="#licences" aria-hidden="true"><span class="octicon octicon-link"></span></a>Licences</h3>
+<a id="licences" class="anchor" href="#licences" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Licences</h3>
 
 <h1></h1>
 
@@ -172,19 +175,19 @@ limitations under the License.
 </code></pre>
 
 <h3>
-<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributing</h3>
+<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contributing</h3>
 
 <p>If you would like to contribute code you can do so through GitHub by forking the repository and sending a pull request.</p>
 
 <h3>
-<a id="contact" class="anchor" href="#contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contact</h3>
+<a id="contact" class="anchor" href="#contact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contact</h3>
 
 <p>Twitter : <a href="https://twitter.com/angebagui">@angebagui</a><br>
 Google+ : <a href="https://plus.google.com/u/0/+AngeBagui">+AngeBagui</a><br>
 Email   : <a href="mailto:angebagui@gmail.com">angebagui@gmail.com</a></p>
 
       <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/angebagui/Equilibre">Equilibre</a> is maintained by <a href="https://github.com/angebagui">angebagui</a>.</span>
+        <span class="site-footer-owner"><a href="https://github.com/angebagui/equilibre">Equilibre</a> is maintained by <a href="https://github.com/angebagui">angebagui</a>.</span>
 
         <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
